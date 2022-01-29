@@ -28,8 +28,8 @@ async def weLiveInADemocracy(context: commands.Context):
 
 @bot.command(name='shutdown')
 @commands.is_owner()
-async def shutdown(ctx):
-	await ctx.bot.close()
+async def shutdown(context):
+	await context.bot.close()
 
 class Tests(commands.Cog):
 	"""Just some tests"""
