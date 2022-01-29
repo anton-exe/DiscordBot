@@ -40,9 +40,9 @@ async def on_ready():
 	print('Prefix:' + bot.command_prefix)
 	await bot.change_presence(status=discord.Status.online, activity=discord.Game('with your mind'))
 
-@bot.event()
+@bot.event
 async def on_command_error(context, error):
-	context.reply(f'ERROR {error}\nReport this at https://github.com/anton-exe/DiscordBot/issues')
+	await context.reply(f'ERROR {error}\nReport this at https://github.com/anton-exe/DiscordBot/issues')
 
 @bot.before_invoke
 async def logCommand(context):
