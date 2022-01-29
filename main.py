@@ -6,18 +6,33 @@ from discord.ext import commands
 
 bot = commands.Bot(command_prefix='+')
 
-numberEmojis = [
-	"<a:zero:937030158085402664>",
-	"<a:one:937029141239308438>",
-	"<a:two:937029141239308438>",
-	"<a:three:937029141239308438>",
-	"<a:four:937029141239308438>",
-	"<a:five:937029141239308438>",
-	"<a:six:937029141239308438>",
-	"<a:seven:937029141239308438>",
-	"<a:eight:937029141239308438>",
-	"<a:nine:937029141239308438>",
-	"<a:keycap_ten:937031571507126312>"
+letterEmojis = [
+	"🇦",
+	"🇧",
+	"🇨",
+	"🇩",
+	"🇪",
+	"🇫",
+	"🇬",
+	"🇭",
+	"🇮",
+	"🇯",
+	"🇰",
+	"🇱",
+	"🇲",
+	"🇳",
+	"🇴",
+	"🇵",
+	"🇶",
+	"🇷",
+	"🇸",
+	"🇹",
+	"🇺",
+	"🇻",
+	"🇼",
+	"🇽",
+	"🇾",
+	"🇿"
 ]
 @bot.event
 async def on_ready():
@@ -37,14 +52,16 @@ async def atEveyone(context):
 
 @bot.command(name='poll', usage="question, [options]...", brief="broken rn don't use")
 async def weLiveInADemocracy(context):
-	cmdArgs = context.message.content.split(", ", 12)
-	question = cmdArgs[1]
-	choices = cmdArgs[2:]
+	cmdArgs = context.message.content.split(" ", 1)[1].split(", ", 22)
+	question = cmdArgs[0]
+	choices = cmdArgs[1:21]
 	desc = ""
-	for i in range(choices.length):
-		desc = desc + f'{numberEmojis[i]}: {choices[i]}/n'
+	for i in range(len(choices)):
+		desc = desc + f'{letterEmojis[i]}: {choices[i]}\n'
 	embed = discord.Embed(title=question, description=desc)
-	msg = context.send(embed=embed)
+	msg = await context.send(embed=embed)
+	for i in range(len(choices)):
+		await msg.add_reaction(letterEmojis[i])
 
 @bot.command(name='shutdown')
 @commands.is_owner()
