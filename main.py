@@ -64,11 +64,11 @@ async def weLiveInADemocracy(context):
 class Tests(commands.Cog):
 	"""Just some tests"""
 
-	@commands.command(name='like', brief='Reaction Test', description = '"Likes" your command')
+	@commands.command(name='like', aliases=['react'], brief='Reaction Test', description = '"Likes" your command')
 	async def like(self, context):
 		await context.message.add_reaction('👍')
 
-	@commands.command(name='server', description = 'Displays server info')
+	@commands.command(name='server', aliases=["info"], description = 'Displays server info')
 	async def fetchServerInfo(self, context):
 		guild = context.guild
 
@@ -88,6 +88,11 @@ class Anton_only(commands.Cog):
 	async def atEveyone(self, context):
 		for i in range(100):
 			await context.send(f'@everyone #{i + 1}')
+
+	@commands.command(name="throwerror", aliases=["error"])
+	@commands.is_owner()
+	async def throwError(self, context):
+		1 / 0
 
 bot.add_cog(Tests())
 bot.add_cog(Anton_only())
