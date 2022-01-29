@@ -40,6 +40,10 @@ async def on_ready():
 	print('Prefix:' + bot.command_prefix)
 	await bot.change_presence(status=discord.Status.online, activity=discord.Game('with your mind'))
 
+@bot.event()
+async def on_command_error(context, error):
+	context.reply(f'ERROR {error}\nReport this at https://github.com/anton-exe/DiscordBot/issues')
+
 @bot.before_invoke
 async def logCommand(context):
 	print(f'\033[0;44m@{context.author}\033[0m ran \033[0;91m{context.prefix}{context.command}\033[0m in \033[0;44m#{context.channel.name}\033[0m on \033[1m{context.guild.name}\033[0m')
