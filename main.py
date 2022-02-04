@@ -1,6 +1,8 @@
 import os
 TOKEN = os.environ['TOKEN']
 
+import asyncio
+
 import discord
 from discord.ext import commands
 
@@ -24,6 +26,33 @@ async def on_command_error(context, error):
 @bot.before_invoke
 async def logCommand(context):
 	print(f'\033[0;44m@{context.author}\033[0m ran \033[0;91m{context.prefix}{context.command}\033[0m in \033[0;44m#{context.channel.name}\033[0m on \033[1m{context.guild.name}\033[0m')
+
+@bot.command(name='rps', brief="A game of rock paper scissors!", description='Definetely not rigged lol')
+async def rockPaperScissors(context):
+	msg = await context.reply('Rock, Paper, Scissors...')
+	await msg.add_reaction('✊')
+	await msg.add_reaction('✋')
+	await msg.add_reaction('✌️')
+
+	def check(reaction, user):
+		return user == context.author and (str(reaction.emoji) == '✊' or str(reaction.emoji) == '✋' or str(reaction.emoji) == '✌️')
+	
+	play = ''
+
+	try:
+			reaction, user = await bot.wait_for('reaction_add', timeout=60.0, check=check)
+			play = str(reaction.emoji)
+	except asyncio.TimeoutError:
+		await msg.reply("Time's up lol")
+	else:
+		if play == '✊':
+			await msg.reply('✋ I win lol')
+		elif play == '✋':
+			await msg.reply('✌️ Lamo loser')
+		elif play == '✌️':
+			await msg.reply('✊ ez')
+		else:
+			await msg.reply('CHEATER!!1!!!')
 
 @bot.command(name='poll', usage="question, [options]...", brief="auto generate a message to do a poll")
 async def weLiveInADemocracy(context):
